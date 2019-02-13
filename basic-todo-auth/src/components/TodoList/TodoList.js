@@ -13,11 +13,17 @@ class TodoList extends Component {
 
     if (this.props.todos) {
       li = this.props.todos.map((item, index) => (
-        <div>
-          <li className="list-group-item" key={item.id}>{`${item.title} - Author: ${item.authorId}`} </li>
-          <Button onClick={() => this.props.deleteTask(item.id)} btnType="danger">X</Button>
-        </div>
 
+        <li className="list-group-item" key={item.id}>
+          <div className='row'>
+            <div className="col-md-6">
+              {`${item.title} - Author: ${item.authorId}`}
+            </div>
+            <div className="col-md-6">
+              <Button onClick={() => this.props.deleteTask(item.id)} btnType="danger">x</Button>
+            </div>
+          </div>
+        </li>
       ))
     }
 
