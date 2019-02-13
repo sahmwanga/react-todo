@@ -7,18 +7,20 @@ import addTask from '../../redux/actions'
 
 class Todo extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      todo: ''
-    }
-    this.onInputChange = this.onInputChange.bind(this)
+  state = {
+    todo: ''
   }
 
-  onInputChange(event) {
-    this.setState({ todo: event.target.value })
+  onInputChange = (event) => {
+    this.setState({
+      todo: event.target.value
+    })
   }
 
+  addTodoHandle = () => {
+    this.props.addTask(this.state.todo)
+    // console.log(this.state.todo)
+  }
 
   render() {
     return (
@@ -29,13 +31,14 @@ class Todo extends Component {
             <div className="row">
               <div className="col-sm-9">
                 <div className="form-group">
-                  <input type="text" onChange={this.onInputChange} ref="task" className="form-control" placeholder="Todo..." />
+                  <input type="text" name="todo" onChange={this.onInputChange} className="form-control" placeholder="Todo..." />
                 </div>
               </div>
               <div className="col-sm-3">
                 <Button
                   btnType="info"
-                  onClick={() => this.props.addTask(this.state.todo)}>Add Todo</Button>
+                  onClick={() => this.props.addTask(this.state.todo)}
+                >Add Todo</Button>
               </div>
             </div>
             <div>
@@ -51,6 +54,9 @@ class Todo extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(addTask, dispatch)
+  // return {
+  //   addTask: (todo) => dispatch(addTask(todo))
+  // }
 }
 
-export default connect(() => { }, mapDispatchToProps)(Todo)
+export default connect(null, mapDispatchToProps)(Todo)

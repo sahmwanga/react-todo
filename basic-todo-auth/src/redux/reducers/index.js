@@ -1,30 +1,12 @@
-import c from '../constants'
 import { combineReducers } from 'redux'
+import todoReducer from './todo'
+import authReducer from './authReducer'
+import { firestoreReducer } from 'redux-firestore'
 
-const initialState = [
-  'test', 'abc'
-]
-
-const todoReducer = (state = initialState, action) => {
-  switch (action.type) {
-
-    case c.ADD_TODO:
-      return state.concat(action.payload);
-
-    case c.REMOVE_TODO:
-      console.log('remove todo...')
-      state = state.slice();
-      state.splice(action.payload, 1)
-      return state;
-
-    default:
-      return state;
-  }
-
-},
-
-  reducers = combineReducers({
-    tasks: todoReducer
-  })
+const reducers = combineReducers({
+  tasks: todoReducer,
+  auth: authReducer,
+  firestore: firestoreReducer
+})
 
 export default reducers

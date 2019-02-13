@@ -1,2 +1,4 @@
 /basic-todo/node_modules
 /basic-todo-auth/node_modules
+/basic-todo-auth/src/config/firebase.js
+/basic-todo-auth/src/config/key.js
