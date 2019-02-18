@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import deleteTask from '../../redux/actions/'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
+import moment from 'moment'
 
 class TodoList extends Component {
   render() {
@@ -16,10 +17,12 @@ class TodoList extends Component {
 
         <li className="list-group-item" key={item.id}>
           <div className='row'>
-            <div className="col-md-6">
-              {`${item.title} - Author: ${item.authorId}`}
+            <div className="col-md-9">
+              {item.title}<br />
+              <span style={{ color: 'gray' }}>Created by {item.authorId}</span>, 
+              <span style={{paddingLeft:15,color: 'lightgray'}}>{moment(item.createdAt.toDate().toString()).fromNow()}</span>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <Button onClick={() => this.props.deleteTask(item.id)} btnType="danger">x</Button>
             </div>
           </div>
@@ -36,7 +39,6 @@ class TodoList extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.firestore.ordered.todos)
   return {
     todos: state.firestore.ordered.todos
   }

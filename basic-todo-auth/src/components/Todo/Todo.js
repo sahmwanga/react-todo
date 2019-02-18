@@ -4,6 +4,7 @@ import Button from '../Button/Button'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import addTask from '../../redux/actions'
+import { Redirect } from 'react-router-dom'
 
 class Todo extends Component {
 
@@ -23,8 +24,13 @@ class Todo extends Component {
   }
 
   render() {
+
+    const { auth, authProfile } = this.props;
+    if (!auth.uid) return <Redirect to="/login" />
+
     return (
       <div className="container mt-5">
+      <p>Welcome <span style={{fontWeight:100,fontStyle:'italic'}}>{authProfile.firstName} {authProfile.lastName}</span></p>
         <div className="card">
           <div className="card-body">
             <h2 className="card-title text-center">Todo App</h2><hr />
@@ -51,6 +57,12 @@ class Todo extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    auth: state.firebase.auth,
+    authProfile:state.firebase.profile
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(addTask, dispatch)
@@ -59,4 +71,4 @@ function mapDispatchToProps(dispatch) {
   // }
 }
 
-export default connect(null, mapDispatchToProps)(Todo)
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)
